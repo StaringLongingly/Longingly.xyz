@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Longingly.xyz</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            font-size: 1.5vw; /* Smaller responsive font size */
+        }
+        header {
+            text-align: center;
+            padding: 2vw;
+            background-color: transparent;
+        }
+        header img {
+            max-width: 100%;
+            height: auto;
+        }
+        .container {
+            background-color: transparent;
+            display: flex;
+            flex-direction: column;
+            padding: 2vw;
+        }
+        .nav {
+            margin-bottom: 2vw;
+        }
+        .nav a {
+            background-color: transparent;
+            display: block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 2vh;
+            transition: transform 0.3s ease, font-size 0.3s ease, text-shadow 0.3s ease;
+            font-size: 1.5em; /* Larger font size for mobile */
+        }
+        .nav a:hover {
+            transform: translateX(1vw);
+            font-size: 1.7em; /* Slightly larger on hover */
+            text-shadow: 0 0 10px white; /* Glowing effect */
+        }
+        .content {
+            font-size: 1.5em; /* Larger font size for mobile */
+            margin-top: 2vh; /* Add space between links and content */
+            padding-right: 10vw; /* Add more space on the right */
+            background-color: transparent !important;
+        }
+        .underline {
+            text-decoration-line: underline;
+            text-decoration-color: white;
+        }
+        footer {
+            text-align: center;
+            padding: 1vw;
+            font-size: 1em; /* Larger text for mobile */
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            display: flex;
+            justify-content: space-between; /* Distribute items evenly */
+            align-items: center; /* Center items vertically */
+        }
+
+        /* Volume Control Styling */
+        .volume-control {
+            cursor: pointer;
+            margin-right: auto; /* Push volume control to the left as much as possible */
+            margin-left: 10px; /* Add some space between the volume control and other content */
+        }
+
+        /* Footer Text Styling */
+        .footer-text {
+            margin: 0; /* Remove default margin */
+            flex: 1; /* Occupy available space */
+            text-align: center; /* Center the text */
+        }
+
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video video {
+            width: 100%;
+            object-fit: cover;
+            display: block;
+            position: absolute; /* Position the video absolutely within the container */
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: -1; /* Move the video behind other content */
+        }
+
+        /* Media queries for additional responsiveness */
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+            }
+            .nav {
+                flex: 1;
+                margin-right: 2vw;
+            }
+            .content {
+                flex: 3;
+                margin-top: 0; /* Remove margin top */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="./channels4_banner.png" alt="Header Image">
+    </header>
+    <div class="container">
+        <div class="nav">
+            <a href="https://github.com/StaringLongingly" class="nav-link">> Github</a>
+            <a href="https://www.youtube.com/@staringlongingly" class="nav-link">> Youtube</a>
+            <a href="" class="nav-link">> Credits!</a>
+        </div>
+        <div class="content">
+            <p>Hi, and welcome to my niche piece of the internet, I am Longingly aka StaringLongingly aka Dimitris Bousoulegkas, a current Computer Engineering student at the University of the Aegean. <br>You can find my github projects and youtube channel on the left.
+            <br> <u class="underline">   Have a great day!</u></p>
+        </div>
+        <div class="video-container">
+            <div class="video">
+                <!-- Replace 'your-video.mp4' with the path to your video file -->
+                <video autoplay muted loop>
+                    <source src="./bg.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-left">
+            <div class="volume-control" onclick="changeVolume()">
+                Volume: <span id="volume-value">5</span>
+            </div>
+        </div>
+        <p class="footer-text">&copy; 2024 Dimitris Bousoulegkas. All rights reserved.</p>
+        <div class="footer-right">
+            <p>Written with GPT-4o <3 . ..</p>
+        </div>
+    </footer>
+
+    <audio id="background-music" src="./peace.mp3" loop autoplay></audio>
+    <audio id="hover-sound" src="./RkKbCherryLinearBlack.ogg"></audio>
+
+    <script>
+        let volume = 5; // Default volume level
+
+        function changeVolume() {
+            volume = (volume + 1) % 10; // Increase volume (wrap around to 0 after 9)
+            document.getElementById('volume-value').textContent = volume;
+            document.getElementById('background-music').volume = volume / 10;
+            document.getElementById('hover-sound').volume = volume / 10;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const hoverSound = document.getElementById('hover-sound');
+            const links = document.querySelectorAll('.nav-link');
+
+            links.forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    hoverSound.currentTime = 0; // Rewind to start
+                    hoverSound.play();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

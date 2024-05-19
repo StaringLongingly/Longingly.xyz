@@ -88,35 +88,35 @@
 
         * { box-sizing: border-box; }
         .video-background {
-        background: #000;
-        position: fixed;
-        top: 0; right: 0; bottom: 0; left: 0;
-        z-index: -99;
+            background: #000;
+            position: fixed;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: -99;
         }
         .video-foreground,
         .video-background iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
 
         @media (min-aspect-ratio: 16/9) {
-        .video-foreground { height: 300%; top: -100%; }
+            .video-foreground { height: 300%; top: -100%; }
         }
         @media (max-aspect-ratio: 16/9) {
-        .video-foreground { width: 300%; left: -100%; }
+            .video-foreground { width: 300%; left: -100%; }
         }
         @media all and (max-width: 600px) {
-        .vid-info { width: 50%; padding: .5rem; }
-        .vid-info h1 { margin-bottom: .2rem; }
+            .vid-info { width: 50%; padding: .5rem; }
+            .vid-info h1 { margin-bottom: .2rem; }
         }
         @media all and (max-width: 500px) {
-        .vid-info .acronym { display: none; }
+            .vid-info .acronym { display: none; }
         }
-       
+
         /* Media queries for additional responsiveness */
         @media (min-width: 768px) {
             .container {
@@ -130,6 +130,18 @@
                 flex: 3;
                 margin-top: 0; /* Remove margin top */
             }
+        }
+
+        #overlayButton {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
         }
     </style>
 </head>
@@ -149,12 +161,13 @@
         </div>
         <div class="video-background">
             <div class="video-foreground">
-                <!-- Replace 'your-video.mp4' with the path to your video file -->
-                <iframe id="player" width="100%" height="100%" object-fit="cover" src="https://www.youtube.com/embed/uI3XW90Ep_A?autoplay=1&showinfo=0&controls=0&loop=1&enablejsapi=1" title="Longingly.xyz Background" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                <iframe id="player" width="100%" height="100%" object-fit="cover" src="https://www.youtube.com/embed/uI3XW90Ep_A?autoplay=1&showinfo=0&controls=0&loop=1&enablejsapi=1&playlist=uI3XW90Ep_A" title="Longingly.xyz Background" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
                 </iframe>
             </div>
         </div>
     </div>
+
+    <button id="overlayButton"></button>
 
     <footer>
         <div class="footer-left">
@@ -178,15 +191,15 @@
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
-            events: {
-                'onReady': onPlayerReady
-            }
+                events: {
+                    'onReady': onPlayerReady
+                }
             });
         }
 
         function onPlayerReady(event) {
-            // Set the volume to a value between 0 and 100
             event.target.setVolume(50); // 50 is the volume level here, you can change it as needed
+            event.target.playVideo();
         }
 
         let volume = 5; // Default volume level
@@ -209,6 +222,21 @@
                 });
             });
         });
+
+        document.getElementById('overlayButton').addEventListener('click', function() {
+            var iframe = document.getElementById('player');
+            iframe.src += "&autoplay=1";
+            this.style.display = 'none'; // Hide the overlay button after interaction
+        });
+
+        // Optional: Trigger the overlay button click on any user interaction
+        document.body.addEventListener('touchstart', function() {
+            document.getElementById('overlayButton').click();
+        }, { once: true });
+
+        document.body.addEventListener('scroll', function() {
+            document.getElementById('overlayButton').click();
+        }, { once: true });
     </script>
 </body>
 </html>

@@ -130,7 +130,7 @@
         <div class="video-container">
             <div class="video">
                 <!-- Replace 'your-video.mp4' with the path to your video file -->
-                <iframe width="100%" height="100%" object-fit="cover" src="https://www.youtube.com/embed/LGUaaQSDgPw?autoplay=1&showinfo=0&controls=0&loop=1" title="Cyberpunk Edgerunners ED 1080p" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                <iframe id="player" width="100%" height="100%" object-fit="cover" src="https://www.youtube.com/embed/uI3XW90Ep_A?autoplay=1&showinfo=0&controls=0&loop=1&enablejsapi=1" title="Longingly.xyz Background" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
                 </iframe>
             </div>
         </div>
@@ -151,12 +151,32 @@
     <audio id="hover-sound" src="./RkKbCherryLinearBlack.ogg"></audio>
 
     <script>
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+            events: {
+                'onReady': onPlayerReady
+            }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Set the volume to a value between 0 and 100
+            event.target.setVolume(50); // 50 is the volume level here, you can change it as needed
+        }
+
         let volume = 5; // Default volume level
 
         function changeVolume() {
             volume = (volume + 1) % 10; // Increase volume (wrap around to 0 after 9)
             document.getElementById('volume-value').textContent = volume;
-            document.getElementById('LGUaaQSDgPw').volume = volume / 10;
+            player.setVolume(volume * 10);
             document.getElementById('hover-sound').volume = volume / 10;
         }
 

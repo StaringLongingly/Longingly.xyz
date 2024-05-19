@@ -56,7 +56,6 @@
         }
         footer {
             text-align: center;
-            padding: 1vw;
             font-size: 1em; /* Larger text for mobile */
             position: fixed;
             width: 100%;
@@ -70,34 +69,54 @@
         .volume-control {
             cursor: pointer;
             margin-right: auto; /* Push volume control to the left as much as possible */
-            margin-left: 10px; /* Add some space between the volume control and other content */
+            margin-left: 2vw; /* Add some space between the volume control and other content */
         }
 
         /* Footer Text Styling */
         .footer-text {
             margin: 0; /* Remove default margin */
+            margin-left: 5vw;
             flex: 1; /* Occupy available space */
             text-align: center; /* Center the text */
         }
 
-        .video-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .footer-right {
+            margin-left: auto;
+            margin-right: 1vw;
+            text-align: right;
         }
 
-        .video {
-            width: 100%;
-            object-fit: cover;
-            display: block;
-            position: absolute; /* Position the video absolutely within the container */
-            top: 0;
-            left: 0;
-            height: 100%;
-            z-index: -1; /* Move the video behind other content */
-            overflow: hidden
+        * { box-sizing: border-box; }
+        .video-background {
+        background: #000;
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        z-index: -99;
+        }
+        .video-foreground,
+        .video-background iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
         }
 
+        @media (min-aspect-ratio: 16/9) {
+        .video-foreground { height: 300%; top: -100%; }
+        }
+        @media (max-aspect-ratio: 16/9) {
+        .video-foreground { width: 300%; left: -100%; }
+        }
+        @media all and (max-width: 600px) {
+        .vid-info { width: 50%; padding: .5rem; }
+        .vid-info h1 { margin-bottom: .2rem; }
+        }
+        @media all and (max-width: 500px) {
+        .vid-info .acronym { display: none; }
+        }
+       
         /* Media queries for additional responsiveness */
         @media (min-width: 768px) {
             .container {
@@ -128,8 +147,8 @@
             <p>Hi, and welcome to my niche piece of the internet, I am Longingly aka StaringLongingly aka Dimitris Bousoulegkas, a current Computer Engineering student at the University of the Aegean. <br>You can find my github projects and youtube channel on the left.
             <br> <u class="underline">   Have a great day!</u></p>
         </div>
-        <div class="video-container">
-            <div class="video">
+        <div class="video-background">
+            <div class="video-foreground">
                 <!-- Replace 'your-video.mp4' with the path to your video file -->
                 <iframe id="player" width="100%" height="100%" object-fit="cover" src="https://www.youtube.com/embed/uI3XW90Ep_A?autoplay=1&showinfo=0&controls=0&loop=1&enablejsapi=1" title="Longingly.xyz Background" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
                 </iframe>
@@ -144,9 +163,7 @@
             </div>
         </div>
         <p class="footer-text">&copy; 2024 Dimitris Bousoulegkas. All rights reserved.</p>
-        <div class="footer-right">
-            <p>Written with GPT-4o <3 . ..</p>
-        </div>
+        <p class="footer-right">Written with GPT-4o <3 </p>
     </footer>
 
     <audio id="hover-sound" src="./RkKbCherryLinearBlack.ogg"></audio>

@@ -226,10 +226,17 @@
 
         function onPlayerReady(event) {
             event.target.setVolume(50); // 50 is the volume level here, you can change it as needed
+            document.getElementById("player").style.visibility = "hidden";
         }
 
         function onPlayerStateChange(event) {
-
+            if(event.data === -1) {
+                document.getElementById("player").style.visibility = "hidden";
+            }
+            
+            if(event.data === 1) {
+                document.getElementById("player").style.visibility = "visible";
+            }
         }
 
         let volume = 5; // Default volume level
